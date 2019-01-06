@@ -9,6 +9,7 @@ Load the package.
 ```R
 source("prettyplot.R")
 ```
+Warning: some base graphics functions, such as `plot`are overwritten here. You can still access them by calling `graphics::plot`.
 
 ### Scatter plots
 
