@@ -54,7 +54,7 @@ with(df,
 axelines(m["T12"], m["O3"], col=2)
 ```
 
-<img src="examples/labels.png" width="400>
+<img src="examples/labels.png" width="400">
 
 ### Correlation matrices
 
@@ -64,5 +64,5 @@ df = ozone[, c("O3", "T12", "Ne12", "Vx")]
 cor.im(df)
 ```
 
-<img src="examples/cor.png" width="400>
-
+<img src="./examples/cor.png" width="400">
+                                                    
