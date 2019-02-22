@@ -9,6 +9,7 @@ Load the package.
 ```R
 source("prettyplot.R")
 ```
+Warning: some base graphics functions, such as `plot`are overwritten here. You can still access them by calling `graphics::plot`.
 
 ### Scatter plots
 
@@ -30,7 +31,7 @@ hist(rnorm(1000))
 | :-----------------------: | :-------------------------: |
 | ![](examples/hist-pp.png) | ![](examples/hist-base.png) |
 
-### ### Boxplots
+### Boxplots
 
 ```R
 with(ChickWeight,
@@ -42,7 +43,7 @@ with(ChickWeight,
 | :---------------------: | :-----------------------: |
 | ![](examples/bp-pp.png) | ![](examples/bp-base.png) |
 
-### ### Labelling axes
+### Labelling axes
 
 ```R
 load("ozone.RData")
@@ -54,7 +55,7 @@ with(df,
 axelines(m["T12"], m["O3"], col=2)
 ```
 
-![](examples/labels.png)
+<img src="examples/labels.png" width="400">
 
 ### Correlation matrices
 
@@ -64,5 +65,5 @@ df = ozone[, c("O3", "T12", "Ne12", "Vx")]
 cor.im(df)
 ```
 
-![](examples/cor.png)
-
+<img src="./examples/cor.png" width="400">
+                                                    
