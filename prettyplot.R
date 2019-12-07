@@ -90,7 +90,7 @@ plot <-
         if(is.data.frame(x)){
           graphics::plot(x, col=col, pch=pch, bty=bty, tcl=tcl, mgp=mgp,
                          cex.axis=cex.axis, cex=cex,
-                         family=family, axes=FALSE, ...);
+                         family=family, ...);
         }
         else {
           graphics::plot(x, col=col, pch=pch, bty=bty, tcl=tcl, mgp=mgp,
@@ -164,6 +164,7 @@ boxplot <-
            xticks = NULL,
            xticks_labels = NULL,
            color = NULL,
+           alpha = 1,
            color.mid = NULL,
            color.out = NULL,
            color.line = NULL,
@@ -197,9 +198,12 @@ boxplot <-
 
     # Adjusting colors.
     if(!missing(color)) {
-      box_style$medcol <- find_color(color, cmap)
-      box_style$outcol <- find_color(color, cmap)
-      box_style$whiskcol <- find_color(color, cmap)
+      col <- find_color(color, cmap)
+      col <- adjustcolor(col, alpha.f = alpha)
+      
+      box_style$medcol <- col
+      box_style$outcol <- col
+      box_style$whiskcol <- col
     }
     if(!missing(color.mid)) {
       box_style$medcol <- find_color(color.mid, cmap)
@@ -255,6 +259,8 @@ hist <-
            family = "serif",
            axes = T,
            tufte.style=F,
+           xmark = NULL,
+           xmark.label = NULL,
            ...) {
 
     # Adjusting colors.
@@ -276,7 +282,7 @@ hist <-
                        freq=freq, breaks=breaks, yaxt=yaxt, lwd=lwd, tcl=tcl, mgp=mgp,
                        cex.axis=cex.axis, family=family, axes=F, ...)
     if (axes) {
-      x_axis(family=family, cex.axis=cex.axis)
+      x_axis(family=family, cex.axis=cex.axis, mark=xmark, mark.label = xmark.label)
     }
 
     # Bins separation lines. The separation disapears at high bin count.
@@ -290,9 +296,8 @@ hist <-
     if (tufte.style) {
       q = quantile(x, probs=c(0.05, .35, .65, 0.95))
       rug(mean(x), lwd=1.5, lend=1)
-      lines(c(q[1],q[2]), c(-.0125, -.0125), col=0, alpha=1, lwd=1.5, lend=1)
-      lines(c(q[3],q[4]), c(-.0125, -.0125), col=0, alpha=1, lwd=1.5, lend=1)
-
+      #lines(c(q[1],q[2]), c(-.0125, -.0125), col=0, alpha=1, lwd=1.5, lend=1)
+      #lines(c(q[3],q[4]), c(-.0125, -.0125), col=0, alpha=1, lwd=1.5, lend=1)
     }
   }
 
@@ -338,7 +343,7 @@ cor.im <- function(df, order="", size=1) {
   text(x = rep(1:n, times=n)[-((0:(n-1))*n+1:n)],
        y = rep(n:1, each=n-1), labels = formatC(m, 2), cex = .7*size,
        col = cmap.knitr(0))
-  text(x = 1:n, y=n:1, labels=names(df), col="white", cex = .9*size)
+  text(x = 1:n, y=n:1, labels=names(df), col="white", cex = .8*size)
 }
 
 
@@ -375,14 +380,30 @@ find_color <- function (col, cmap) {
   return(col)
 }
 
-axelines <- function(x, y, col=1, minx=0, miny=0) {
+axelines <- function(x, y, col=1, minx=-1000, miny=-1000, alpha=1) {
   col = find_color(col, cmap.knitr)
+  col = adjustcolor(col, alpha.f = alpha)
   points(x, y, col=col, pch=20)
   lines(c(x,x), c(miny,y), col=col, lty=2)
   lines(c(minx,x), c(y,y), col=col, lty=2)
 }
 
-x_axis <- function(lwd = .5, mark=NULL, mark.label=NULL, ...) {
+hline <- function(y, col=1, min=-1000, max=1000, lty=2, alpha=1, ...) {
+  col = find_color(col, cmap.knitr)
+  col = adjustcolor(col, alpha.f = alpha)
+  lines(c(min,max), c(y,y), col=col, lty=lty, ...)
+}
+
+vline <- function(x, col=1, min=-1000, max=1000, lty=2, alpha=1, ...) {
+  col = find_color(col, cmap.knitr)
+  col = adjustcolor(col, alpha.f = alpha)
+  lines(c(x,x), c(min,max), col=col, lty=lty, ...)
+}
+
+x_axis <- function(lwd = .5, mark=NULL, mark.label=NULL, 
+                   cex.axis = .8,
+                   family="serif",
+                   ...) {
   if (!is.null(mark)) {
     xaxp = par("xaxp")
     pos = seq(xaxp[[1]], xaxp[[2]], length.out=xaxp[[3]]+1)
@@ -391,15 +412,18 @@ x_axis <- function(lwd = .5, mark=NULL, mark.label=NULL, ...) {
     labels = pos
     labels[[i]] = if (is.null(mark.label)) formatC(mark) else mark.label
     axis(1, at = pos, labels = labels, tcl = -0.15, mgp = c(0,0.25,0),
-         las=1, lwd=lwd, ...)
+         las=1, lwd=lwd, family=family, cex.axis=cex.axis, ...)
   }
   else {
     axis(1, tcl = -0.15, mgp = c(0,0.25,0),
-         las=1, lwd=lwd, ...)
+         las=1, lwd=lwd, family=family, cex.axis=cex.axis, ...)
   }
 }
 
-y_axis <- function(lwd = .5, mark=NULL, mark.label=NULL, ...) {
+y_axis <- function(lwd = .5, mark=NULL, mark.label=NULL, 
+                   cex.axis = .8,
+                   family="serif",
+                   ...) {
   if (!is.null(mark)) {
     yaxp = par("yaxp")
     pos = seq(yaxp[[1]], yaxp[[2]], length.out=yaxp[[3]]+1)
@@ -408,11 +432,11 @@ y_axis <- function(lwd = .5, mark=NULL, mark.label=NULL, ...) {
     labels = pos
     labels[[i]] = if (is.null(mark.label)) formatC(mark) else mark.label
     axis(2, at = pos, labels = labels, tcl = -0.15, mgp = c(0,0.5,0),
-         las=1, lwd=lwd, ...)
+         las=1, lwd=lwd, family=family, cex.axis=cex.axis, ...)
   }
   else {
     axis(2, tcl = -0.15, mgp = c(0,0.5,0),
-         las=1, lwd=lwd, ...)
+         las=1, lwd=lwd, family=family, cex.axis=cex.axis, ...)
   }
 }
 
