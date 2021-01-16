@@ -1,69 +1,71 @@
-# PrettyPlot
 
-_Prettier base plots in R_.
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## Examples
+# pretty: Prettier base plots in R
 
-Load the package.
+<!-- badges: start -->
 
-```R
-source("prettyplot.R")
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+<!-- badges: end -->
+
+**pretty** provides a drop-in replacement to `plot()`, `hist()`,
+`boxplot()` and other plotting functions with prettier default
+parameters and easier customizability.
+
+## Installation
+
+You can install the development version from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("OlivierBinette/pretty")
 ```
-Warning: some base graphics functions, such as `plot`are overwritten here. You can still access them by calling `graphics::plot`.
+
+## Example
 
 ### Scatter plots
 
-```R
-plot(cars)
+``` r
+pretty::plot(cars)
 ```
 
-|       PrettyPlot        |           Base            |
-| :---------------------: | :-----------------------: |
-| ![](examples/sp-pp.png) | ![](examples/sp-base.png) |
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 ### Histograms
 
-```R
-hist(rnorm(1000))
+``` r
+pretty::hist(rnorm(1000))
 ```
 
-|        PrettyPlot         |            Base             |
-| :-----------------------: | :-------------------------: |
-| ![](examples/hist-pp.png) | ![](examples/hist-base.png) |
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 ### Boxplots
 
-```R
+``` r
 with(ChickWeight,
-     boxplot(weight ~ Time)
+     pretty::boxplot(weight ~ Time)
 )
 ```
 
-|       PrettyPlot        |           Base            |
-| :---------------------: | :-----------------------: |
-| ![](examples/bp-pp.png) | ![](examples/bp-base.png) |
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ### Labelling axes
 
-```R
-load("ozone.RData")
-df = ozone[, c("O3", "T12", "Ne12", "Vx")]
-m = apply(df, 2, mean)
-with(df, 
-     plot(O3 ~ T12, xmark=m["T12"], ymark=m["O3"])
-)
-axelines(m["T12"], m["O3"], col=2)
+``` r
+m = colMeans(cars)
+pretty::plot(cars, xmark=m[1], ymark=m[2])
+pretty::axelines(m[1], m[2], col=3)
 ```
 
-<img src="examples/labels.png" width="400">
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 ### Correlation matrices
 
-```R
-load("ozone.RData")
-df = ozone[, c("O3", "T12", "Ne12", "Vx")]
-cor.im(df)
+``` r
+df = mtcars[, c("mpg", "disp", "hp", "wt")]
+pretty::correlation(df)
 ```
 
-<img src="./examples/cor.png" width="400">
-                                                    
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
