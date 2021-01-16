@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   fig.width = 4,
   fig.height = 3,
-  dpi = 300
+  dpi = 400
 )
 ```
 
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-**pretty** provides a drop-in replacement to `plot()`, `hist()`, `boxplot()` and other plotting functions with prettier default parameters and easier customizability.
+**pretty** provides a drop-in replacement to `plot()`, `hist()`, `boxplot()` and other plotting functions for prettier default parameters and easier customization.
 
 ## Installation
 
@@ -64,7 +64,7 @@ pretty::axelines(m[1], m[2], col=3)
 
 ### Correlation matrices
 
-```{r, fig.width=4, fig.height=4}
+```{r, fig.width=4, fig.height=4} 
 df = mtcars[, c("mpg", "disp", "hp", "wt")]
 pretty::correlation(df)
 ```

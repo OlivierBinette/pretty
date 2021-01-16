@@ -10,8 +10,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 **pretty** provides a drop-in replacement to `plot()`, `hist()`,
-`boxplot()` and other plotting functions with prettier default
-parameters and easier customizability.
+`boxplot()` and other plotting functions for prettier default parameters
+and easier customization.
 
 ## Installation
 
