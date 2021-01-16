@@ -31,7 +31,7 @@ devtools::install_github("OlivierBinette/pretty")
 pretty::plot(cars)
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+![](man/figures/README-unnamed-chunk-3-1.png)<!-- -->
 
 ### Histograms
 
@@ -39,7 +39,7 @@ pretty::plot(cars)
 pretty::hist(rnorm(1000))
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
 
 ### Boxplots
 
@@ -49,7 +49,7 @@ with(ChickWeight,
 )
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+![](man/figures/README-unnamed-chunk-5-1.png)<!-- -->
 
 ### Labelling axes
 
@@ -59,7 +59,7 @@ pretty::plot(cars, xmark=m[1], ymark=m[2])
 pretty::axelines(m[1], m[2], col=3)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+![](man/figures/README-unnamed-chunk-6-1.png)<!-- -->
 
 ### Correlation matrices
 
@@ -68,4 +68,4 @@ df = mtcars[, c("mpg", "disp", "hp", "wt")]
 pretty::correlation(df)
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+![](man/figures/README-unnamed-chunk-7-1.png)<!-- -->
